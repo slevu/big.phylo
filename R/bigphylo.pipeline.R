@@ -24,7 +24,7 @@
 #' @param verbose		Flag to run function in verbose mode.
 #' @return NULL. Creates shell files in \code{outdir}, and attempts to submit those to a queuing system.
 #' @example example/ex.h3n2.ExaML.bootstrap.per.proc.R
-pipeline.ExaML.bootstrap.per.proc<- function(indir, infile, outdir=indir, bs.from=0, bs.n= 500, bs.to= bs.n, hpc.walltime=1, hpc.q=NA, hpc.sys=cmd.hpcsys(), hpc.mem="500mb", hpc.nproc=1, verbose=1)
+pipeline.ExaML.bootstrap.per.proc<- function(indir, infile, outdir=indir, bs.from=0, bs.n= 500, bs.to= bs.n, hpc.walltime=1, hpc.q=NA, hpc.mem="500mb", hpc.nproc=1, verbose=1)
 {	
 	#	sense check
 	if(!grepl('.R',infile))							stop("expect R infile that ends in .R")		
@@ -40,11 +40,12 @@ pipeline.ExaML.bootstrap.per.proc<- function(indir, infile, outdir=indir, bs.fro
 	#	add HPC wrapper and submit job
 	dummy		<- lapply(cmd, function(x)
 			{				
-				x		<- cmd.hpcwrapper(x, hpc.walltime=24, hpc.sys=hpc.sys, hpc.q=hpc.q, hpc.mem=hpc.mem, hpc.nproc=hpc.nproc)
+				wrap <- cmd.hpcwrapper.cx1.ic.ac.uk(hpc.select=1, hpc.walltime = hpc.walltime, hpc.mem = hpc.mem, hpc.nproc = hpc.nproc, hpc.q = hpc.q)
+				cmd <- paste(wrap, x, sep = "\n")
 				signat	<- paste(strsplit(date(),split=' ')[[1]],collapse='_',sep='')
 				outfile	<- paste("exa",signat,sep='.')
 				#cat(x)
-				cmd.hpccaller(outdir, outfile, x)
+				cmd.hpccaller(outdir, outfile, cmd)
 				Sys.sleep(1)
 			})	
 }
