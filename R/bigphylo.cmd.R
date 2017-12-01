@@ -16,7 +16,7 @@ PR.PHYD						<- paste('java -jar ', system.file(package=PR.PACKAGE, "ext", "PhyD
 PR.JMODELTEST				<- paste('java -jar ', system.file(package=PR.PACKAGE, "ext", "jmodeltest-2.1.10", "jModelTest.jar"), sep='')
 PR.EXAML.BS					<- system.file(package=PR.PACKAGE, "ext", "ExaML-raxml")
 HPC.MEM						<- "1750mb"
-HPC.CX1.IMPERIAL.LOAD		<- "module load intel-suite mpi R/3.2.0"
+HPC.CX1.IMPERIAL.LOAD		<- "module load intel-suite mpi R/3.3.2"
 
 #'	@export 
 cmd.examl<- function(indir, infile, outdir=indir, prog.mpi='mpiexec', prog.parser= PR.EXAML.PARSER, args.parser="-m DNA",prog.starttree= PR.EXAML.STARTTREE, prog.rndstarttree=PR.EXAML.BS, args.starttree.type='parsimony', args.starttree.seed=12345, args.starttree.bsid= NA, prog.examl= PR.EXAML.EXAML, args.examl="-m GAMMA -D", resume=0, verbose=1)
@@ -723,7 +723,7 @@ cmd.examl.cleanup<- function(outdir, prog= PR.EXAML.EXAML)
 cmd.hpcwrapper.cx1.ic.ac.uk<- function(hpc.select=1, hpc.walltime=24, hpc.mem=HPC.MEM, hpc.nproc=1, hpc.q=NA, hpc.load=HPC.CX1.IMPERIAL.LOAD)
 {
 	wrap<- "#!/bin/sh"
-	tmp	<- paste("#PBS -l walltime=",hpc.walltime,":59:59,pcput=",hpc.walltime,":45:00",sep='')
+	tmp	<- paste("#PBS -l walltime=",hpc.walltime,":00:00",sep='')
 	wrap<- paste(wrap, tmp, sep='\n')		
 	tmp	<- paste("#PBS -l select=",hpc.select,":ncpus=",hpc.nproc,":mem=",hpc.mem,sep='')
 	wrap<- paste(wrap, tmp, sep='\n')
