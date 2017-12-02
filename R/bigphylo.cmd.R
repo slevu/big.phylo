@@ -16,7 +16,7 @@ PR.PHYD						<- paste('java -jar ', system.file(package=PR.PACKAGE, "ext", "PhyD
 PR.JMODELTEST				<- paste('java -jar ', system.file(package=PR.PACKAGE, "ext", "jmodeltest-2.1.10", "jModelTest.jar"), sep='')
 PR.EXAML.BS					<- system.file(package=PR.PACKAGE, "ext", "ExaML-raxml")
 HPC.MEM						<- "1750mb"
-HPC.CX1.IMPERIAL.LOAD		<- "module load intel-suite mpi R/3.3.2"
+HPC.CX1.IMPERIAL.LOAD		<- "module load intel-suite mpi R/3.3.3"
 
 #'	@export 
 cmd.examl<- function(indir, infile, outdir=indir, prog.mpi='mpiexec', prog.parser= PR.EXAML.PARSER, args.parser="-m DNA",prog.starttree= PR.EXAML.STARTTREE, prog.rndstarttree=PR.EXAML.BS, args.starttree.type='parsimony', args.starttree.seed=12345, args.starttree.bsid= NA, prog.examl= PR.EXAML.EXAML, args.examl="-m GAMMA -D", resume=0, verbose=1)
