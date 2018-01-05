@@ -45,9 +45,11 @@ pipeline.ExaML.bootstrap.per.proc<- function(indir, infile, outdir=indir, bs.fro
 				signat	<- paste(strsplit(date(),split=' ')[[1]],collapse='_',sep='')
 				outfile	<- paste("exa",signat,sep='.')
 				#cat(x)
-				cmd.hpccaller(outdir, outfile, cmd)
+				jobid <- cmd.hpccaller(outdir, outfile, cmd)
 				Sys.sleep(1)
-			})	
+				return(jobid)
+			})
+	return(dummy)
 }
 
 

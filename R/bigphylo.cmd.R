@@ -738,6 +738,7 @@ cmd.hpcwrapper.cx1.ic.ac.uk<- function(hpc.select=1, hpc.walltime=24, hpc.mem=HP
 #' @export
 cmd.hpccaller<- function(outdir, outfile, cmd)
 {
+	jobid <- NULL
 	if( nchar( Sys.which("qsub") ) )
 	{
 		file	<- paste(outdir,'/',outfile,'.qsub',sep='')
@@ -745,7 +746,7 @@ cmd.hpccaller<- function(outdir, outfile, cmd)
 		cat(cmd,file=file)
 		cmd		<- paste("qsub",file)
 		cat( cmd )
-		cat( system(cmd, intern=TRUE) )
+		cat( jobid <- system(cmd, intern=TRUE) )
 		Sys.sleep(1)
 	}
 	else
@@ -755,5 +756,5 @@ cmd.hpccaller<- function(outdir, outfile, cmd)
 		cat(cmd,file=file)
 		Sys.chmod(file, mode = "777")		
 	}
-	
+	return(jobid)
 }
